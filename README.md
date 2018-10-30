@@ -1,0 +1,2 @@
+# docker_mongodb_rs
+基于docker的mongodb分片部署
