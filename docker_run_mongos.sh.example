@@ -1,2 +1,3 @@
 #这3个ip根据实际ip配置
-docker run --name mongos0 -d -p 27017:27017 --entrypoint "mongos" mongo --configdb rs_configsvr/172.17.0.3:27019,172.17.0.7:27019,172.17.0.8:27019 --bind_ip_all
+#docker run --name mongos0 -d -p 27017:27017 --entrypoint "mongos" mongo --storageEngine inMemory --configdb rs_configsvr/172.17.0.3:27019,172.17.0.4:27019,172.17.0.5:27019 --bind_ip_all
+docker run --name mongos0  -d -p 27017:27017  -v /home/mongodb/conf/mongos.conf:/data/configdb/mongos.conf -v /home/mongodb/testKeyFile.file:/data/configdb/testKeyFile.file --entrypoint "mongos" mongo --configdb rs_configsvr/172.17.0.3:27019,172.17.0.4:27019,172.17.0.5:27019  --config /data/configdb/mongos.conf --bind_ip_all
