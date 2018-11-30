@@ -86,4 +86,4 @@ sh.shardCollection("test.order", {"_id": "hashed" })
 
 for (i = 1; i <= 1001; i=i+1){
 db.order6.insert({"price": 1})
-
+### 注：把conf.example移动到 上一级目录，并去掉.example
