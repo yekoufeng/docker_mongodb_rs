@@ -3,7 +3,7 @@
 注意-v映射的数据文件目录，在宿主机上创建对应的目录
 详细的部署文档在csdn博客：https://blog.csdn.net/yekoufeng/article/details/83412431
 
-conf 和testKeyFile.fie放到docker_mongodb_rs的上一级目录
+conf ,log 和testKeyFile.fie放到docker_mongodb_rs的上一级目录
 
 配置时的一些命令汇总(无实际意义，方便拷贝，粘贴)
 
