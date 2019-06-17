@@ -5,6 +5,8 @@
 
 conf ,log 和testKeyFile.fie放到docker_mongodb_rs的上一级目录
 
+key.file的权限为只读 ，设为  chmod 400 testKeyFile.file
+
 配置时的一些命令汇总(无实际意义，方便拷贝，粘贴)
 
 
