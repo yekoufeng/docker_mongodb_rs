@@ -1,4 +1,6 @@
 docker stop mongos0
+docker stop mongos1
+docker stop mongos2
 docker stop configsvr0
 docker stop configsvr1
 docker stop configsvr2
