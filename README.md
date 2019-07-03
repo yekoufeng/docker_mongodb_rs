@@ -3,9 +3,21 @@
 注意-v映射的数据文件目录，在宿主机上创建对应的目录
 详细的部署文档在csdn博客：https://blog.csdn.net/yekoufeng/article/details/83412431
 
+# key生成和预拷贝
+- openssl rand -base64 745 > /home/mongodb/key.file
+- chmod 600 /home/mongodb/key.file
+- 拷贝所有.example结尾的文件到/home/mongodb目录，去掉.example后缀(注：key.file,根据每套集群环境不一样而不同，需要自己重新生成)
+
+
+
 conf ,log 和testKeyFile.fie放到docker_mongodb_rs的上一级目录
 
 key.file的权限为只读 ，设为  chmod 400 testKeyFile.file
+
+ping not found:
+apt-get update
+apt-get install inetutils-ping
+
 
 配置时的一些命令汇总(无实际意义，方便拷贝，粘贴)
 
@@ -17,14 +29,15 @@ configsvr2 172.17.0.8
 docker exec -it configsvr0 bash
 mongo --host 172.17.0.3 --port 27019
 	
+
 rs.initiate(
   {
     _id: "rs_configsvr",
     configsvr: true,
     members: [
       { _id : 0, host : "172.17.0.3:27019" },
-      { _id : 1, host : "172.17.0.7:27019" },
-      { _id : 2, host : "172.17.0.8:27019" }
+      { _id : 1, host : "172.17.0.4:27019" },
+      { _id : 2, host : "172.17.0.5:27019" }
     ]
   }
 )
@@ -45,28 +58,32 @@ shardsvr11 172.17.0.13
 shardsvr12 172.17.0.14
 
 docker exec -it shardsvr00 bash
-mongo --host 172.17.0.9 --port 27018
+
+
+mongo --host 172.17.0.6 --port 27018
 
 rs.initiate(
   {
     _id : "rs_shardsvr0",
     members: [
-      { _id : 0, host : "172.17.0.9:27018" },
-      { _id : 1, host : "172.17.0.10:27018" },
-      { _id : 2, host : "172.17.0.11:27018" }
+      { _id : 0, host : "172.17.0.6:27018" },
+      { _id : 1, host : "172.17.0.7:27018" },
+      { _id : 2, host : "172.17.0.8:27018" }
     ]
   }
 )
 
-mongo --host 172.17.0.12 --port 27018
+
+
+mongo --host 172.17.0.9 --port 27018
 
 rs.initiate(
   {
     _id : "rs_shardsvr1",
     members: [
-      { _id : 0, host : "172.17.0.12:27018" },
-      { _id : 1, host : "172.17.0.13:27018" },
-      { _id : 2, host : "172.17.0.14:27018" }
+      { _id : 0, host : "172.17.0.9:27018" },
+      { _id : 1, host : "172.17.0.10:27018" },
+      { _id : 2, host : "172.17.0.11:27018" }
     ]
   }
 )
@@ -79,8 +96,8 @@ docker exec -it mongos0 bash
 mongo --host 172.17.0.15 --port 27017
 
 
-sh.addShard("rs_shardsvr0/172.17.0.9:27018,172.17.0.10:27018,172.17.0.11:27018")
-sh.addShard("rs_shardsvr1/172.17.0.12:27018,172.17.0.13:27018,172.17.0.14:27018")
+sh.addShard("rs_shardsvr0/172.17.0.6:27018,172.17.0.7:27018,172.17.0.8:27018")
+sh.addShard("rs_shardsvr1/172.17.0.9:27018,172.17.0.10:27018,172.17.0.11:27018")
 
 
 sh.enableSharding("test")
