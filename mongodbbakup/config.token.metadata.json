@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"gamemail.config.token"},{"v":2,"unique":true,"key":{"token":1},"name":"token_1","ns":"gamemail.config.token","background":true}],"uuid":"f91176a53b314bb88a17df95d37140ac"}

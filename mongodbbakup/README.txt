@@ -1,0 +1,1 @@
+把目录下的sh.example拷贝到mongodump容器映射的data目录
